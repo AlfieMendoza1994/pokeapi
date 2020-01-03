@@ -39,11 +39,10 @@ class Page extends React.Component {
 
   render () {
     const { pokemons, query, hasSearched, selectedPokemon, loading } = this.state
-    const pokemon = pokemons.find((pokemon) => pokemon.resource_id === selectedPokemon) || {}
 
     return (
       <div className='d-flex vh-100'>
-        <Detail selectedPokemon={selectedPokemon} pokemon={pokemon} clearSelectedPokemon={this.handleClearSelectedPokemon.bind(this)}/>
+        <Detail selectedPokemon={selectedPokemon} clearSelectedPokemon={this.handleClearSelectedPokemon.bind(this)}/>
         <div className='d-flex flex-column m-3 w-25'>
           <Search query={query} search={this.handleSearch.bind(this)}/>
           <List loading={loading} pokemons={pokemons} hasSearched={hasSearched} selectedPokemon={selectedPokemon} viewPokemon={this.handleViewPokemon.bind(this)}/>

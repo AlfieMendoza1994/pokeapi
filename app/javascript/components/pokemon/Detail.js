@@ -37,7 +37,7 @@ class Detail extends React.Component {
   }
 
   render() {
-    const { selectedPokemon, pokemon, clearSelectedPokemon } = this.props
+    const { selectedPokemon, clearSelectedPokemon } = this.props
     const { loading, details } = this.state
 
     if (!selectedPokemon) {
@@ -55,7 +55,7 @@ class Detail extends React.Component {
         <div className='d-flex flex-column m-3'>
           <div className='d-flex justify-content-between'>
             <div className='d-flex pokemon-detail__header'>
-              <h2 className='text-capitalize'>{pokemon.name}</h2>
+              <h2 className='text-capitalize'>{details['name']}</h2>
               {pokemonTypes(loading, details)}
             </div>
             <div className='pokemon-detail__close'>
