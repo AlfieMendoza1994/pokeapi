@@ -41,16 +41,21 @@ class Detail extends React.Component {
     const { loading, details } = this.state
 
     if (!selectedPokemon) {
+      return (
+        <div className='border-right border-secondary w-75 d-flex justify-content-center align-items-center'>
+          <h2 className='text-secondary'>Search Pokémon to Begin</h2>
+        </div>
+      )
       return null
     }
 
     return (
-      <div className='border-right border-secondary w-75'>
+      <div className='pokemon-detail border-right border-secondary w-75'>
+        <Loading loading={loading}/>
         <div className='d-flex flex-column m-3'>
           <div className='d-flex justify-content-between'>
             <div className='d-flex pokemon-detail__header'>
               <h2 className='text-capitalize'>{pokemon.name}</h2>
-              <Loading loading={loading}/>
               {pokemonTypes(loading, details)}
             </div>
             <div className='pokemon-detail__close'>

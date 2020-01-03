@@ -17,12 +17,14 @@ class Search extends React.Component {
 
     return (
       <div className='d-flex flex-column'>
-        <div className='input-group mb-3'>
-          <input type='search' className='form-control' value={query} onChange={(event) => this.handleQueryInput(event)}/>
-          <div className='input-group-append'>
-            <button type='button' className='btn btn-sm btn-danger' onClick={() => this.props.search(query)}><i className='fas fa-search'/></button>
+        <form onSubmit={(event) => this.props.search(event, query)}>
+          <div className='input-group mb-3'>
+            <div className='input-group-prepend'>
+              <span className='input-group-text'><i className='fas fa-search'/></span>
+            </div>
+            <input type='search' className='form-control' value={query} onChange={(event) => this.handleQueryInput(event)} placeholder='Search...'/>
           </div>
-        </div>
+        </form>
       </div>
     )
   }

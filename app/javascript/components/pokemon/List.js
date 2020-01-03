@@ -1,4 +1,5 @@
 import React from "react"
+import Loading from '../shared/Loading'
 
 const row = (pokemonSpecies, index, viewPokemon, selectedPokemon) => {
   const { name, resource_id: resourceId } = pokemonSpecies
@@ -10,9 +11,15 @@ const row = (pokemonSpecies, index, viewPokemon, selectedPokemon) => {
 
 class List extends React.Component {
   render () {
-    const { pokemons, hasSearched, selectedPokemon } = this.props
+    const { pokemons, hasSearched, selectedPokemon, loading } = this.props
 
-    if (pokemons.length == 0 && hasSearched) {
+    if (loading) {
+      return (
+        <div className='pokemon-list'>
+          <Loading loading={loading}/>
+        </div>
+      )
+    } else if (pokemons.length == 0 && hasSearched) {
       return (
         <div className='d-flex flex-column'>
           <span>NO POKEMON FOUND</span>

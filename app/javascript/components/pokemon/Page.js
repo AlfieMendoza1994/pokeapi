@@ -14,14 +14,18 @@ class Page extends React.Component {
     super(props)
 
     const { query, pokemons, hasSearched } = props
-    this.state = { query, pokemons, hasSearched, selectedPokemon: '' }
+    this.state = { query, pokemons, hasSearched, selectedPokemon: '', loading: false }
   }
 
-  handleSearch(searchQuery) {
-    fetch(`/pokemon/search?q=${searchQuery}`)
-      .then(response => response.json())
-      .then(({ pokemons }) => this.setState({ pokemons, hasSearched: true }))
-      .catch((error) => console.log(error))
+  handleSearch(event, searchQuery) {
+    event.preventDefault()
+    this.setState({ loading: true }, () => {
+      fetch(`/pokemon/search?q=${searchQuery}`)
+        .then(response => response.json())
+        .then(({ pokemons }) => this.setState({ pokemons, hasSearched: true }))
+        .catch((error) => console.log(error))
+        .then(() => this.setState({ loading: false }))
+    })
   }
 
   handleViewPokemon(event, selectedPokemon) {
@@ -34,15 +38,15 @@ class Page extends React.Component {
   }
 
   render () {
-    const { pokemons, query, hasSearched, selectedPokemon } = this.state
+    const { pokemons, query, hasSearched, selectedPokemon, loading } = this.state
     const pokemon = pokemons.find((pokemon) => pokemon.resource_id === selectedPokemon) || {}
 
     return (
       <div className='d-flex vh-100'>
         <Detail selectedPokemon={selectedPokemon} pokemon={pokemon} clearSelectedPokemon={this.handleClearSelectedPokemon.bind(this)}/>
-        <div className={`d-flex flex-column m-3 ${selectedPokemon ? 'w-25' : 'w-100'}`}>
+        <div className='d-flex flex-column m-3 w-25'>
           <Search query={query} search={this.handleSearch.bind(this)}/>
-          <List pokemons={pokemons} hasSearched={hasSearched} selectedPokemon={selectedPokemon} viewPokemon={this.handleViewPokemon.bind(this)}/>
+          <List loading={loading} pokemons={pokemons} hasSearched={hasSearched} selectedPokemon={selectedPokemon} viewPokemon={this.handleViewPokemon.bind(this)}/>
         </div>
       </div>
     );
