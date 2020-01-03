@@ -20,5 +20,6 @@ var ReactRailsUJS = require("react_ujs");
 ReactRailsUJS.useContext(componentRequireContext);
 
 import $ from 'jquery';
+import "@fortawesome/fontawesome-free/js/all";
 
 global.$ = jQuery;

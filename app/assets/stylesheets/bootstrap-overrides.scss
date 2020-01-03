@@ -1,0 +1,12 @@
+.list-group-item.active {
+  background: #dc3545;
+  border-color: #dc3545;
+}
+
+button.close {
+  color: black;
+
+  &:hover {
+    color: black;
+  }
+}

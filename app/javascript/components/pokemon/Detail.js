@@ -1,9 +1,21 @@
 import React from 'react'
+import Loading from '../shared/Loading'
+import Type from './Type'
 
-const pokemonTypes = ({ types }) => {
-  const sortedTypes = types && types.sort((type1, type2) => type1['slot'] - type2['slot']).map((typeData, index) => <span key={`type-${index}`}>{typeData['type']['name']}</span>)
+const pokemonTypes = (loading, { types }) => {
+  if (loading || !types) {
+    return null
+  }
 
-  return sortedTypes
+  const sortedTypes = types.sort((type1, type2) => type1['slot'] - type2['slot'])
+    .map((typeData, index) => {
+      return <Type key={`type-${index}`} text={typeData['type']['name']}/>
+    })
+  return (
+    <div className='mt-3'>
+      {sortedTypes}
+    </div>
+  )
 }
 
 class Detail extends React.Component {
@@ -34,12 +46,12 @@ class Detail extends React.Component {
 
     return (
       <div className='border-right border-secondary w-75'>
-        <div className='d-flex flex-column m-5'>
+        <div className='d-flex flex-column m-3'>
           <div className='d-flex justify-content-between'>
-            <div className='pokemon-detail__header'>
-              <h1 className='text-capitalize'>{pokemon.name}</h1>
-              {loading && <span>FETCHING DATA...</span>}
-              {!loading && pokemonTypes(details)}
+            <div className='d-flex pokemon-detail__header'>
+              <h2 className='text-capitalize'>{pokemon.name}</h2>
+              <Loading loading={loading}/>
+              {pokemonTypes(loading, details)}
             </div>
             <div className='pokemon-detail__close'>
               <button type='button' className='close' aria-label='Close' onClick={clearSelectedPokemon}>
